@@ -39,21 +39,22 @@ module Main where
 import Data.Array ((!))
 import qualified Data.Array as Array
 
-solve :: Integer -> Integer -> [Int] -> Integer
+solve :: Int -> Int -> [Int] -> Integer
 solve n m s = sum $ [variants pLen pOpen | pLen <- [minLeftOpen .. n-m], pOpen <- [minLeftOpen .. n-m]]
-  where sBias = toInteger (sum s)
-        minLeftOpen = toInteger $ abs $ min 0 (minimum $ scanl (+) 0 s)
-        -- using dynamic programming, compute array of (r,c)
-        -- where open(r,c) = number of ways to get valid string of length 'r'
-        --                   having 'c' opened braces
+  where sBias = sum s
+        minLeftOpen = abs $ min 0 (minimum $ scanl (+) 0 s)
+        -- using dynamic programming, compute 2D array 'open'
+        -- where open(r,c) = number of ways to get valid bracket string of
+        --                   length 'r' having 'c' opened braces
         open = Array.listArray ((0, 0), (n-m, n-m)) [dyn r c | (r,c) <- Array.range ((0, 0), (n-m, n-m))]
-        dyn :: Integer -> Integer -> Integer
+        dyn :: Int -> Int -> Integer
         dyn r c
           | r == 0 && c == 0    = 1
           | r == 0              = 0
-          |           c == (-1) = 1
+          |           c == (-1) = 0
           | c > r               = 0
           | otherwise           = (openGet (r-1) (c-1)) + (openGet (r-1) (c+1))
+        openGet :: Int -> Int -> Integer
         openGet r c
           | r < 0 || r > n-m = 0
           | c < 0 || c > n-m = 0
@@ -69,7 +70,7 @@ solve n m s = sum $ [variants pLen pOpen | pLen <- [minLeftOpen .. n-m], pOpen <
 main :: IO ()
 main = do
   line <- getLine
-  let [n,m] = map read (words line) :: [Integer]
+  let [n,m] = map read (words line) :: [Int]
   s <- getLine
   let s' = map (\c -> if c == '(' then 1 else (-1)) s
   putStrLn $ show ((solve n m s') `mod` (10^9 + 7))

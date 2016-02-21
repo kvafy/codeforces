@@ -34,13 +34,15 @@ solve :: [(Char, Int, Int)] -> Int
 solve friends = 2 * (maximum $ zipWith (\m f -> min m f) mTotal fTotal)
   where mFriends = filter (\(g,_,_) -> g == 'M') friends
         mMasks = map mask mFriends
-        mTotal = foldl1 addMasks mMasks
+        mTotal = foldl addMasks mask0 mMasks
         fFriends = filter (\(g,_,_) -> g == 'F') friends
         fMasks = map mask fFriends
-        fTotal = foldl1 addMasks fMasks
+        fTotal = foldl addMasks mask0 fMasks
 
 mask :: (Char,Int,Int) -> [Int]
 mask (_,a,b) = [if a <= i && i <= b then 1 else 0 | i <- [1..366]]
+
+mask0 = [0 | i <- [1..366]]
 
 addMasks [] [] = []
 addMasks (x:xs) (y:ys) = (x+y) : addMasks xs ys
