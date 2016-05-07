@@ -4,36 +4,24 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.*;
 
-public class Template {
+public class Round251_A {
 
     public static void main(String[] args) throws IOException {
-        int[] nm = IOUtils.readIntArray(2);
-
-        //TODO solution here
-
+        int n = IOUtils.readInt();
+        int[] t = IOUtils.readIntArray(n);
+        System.out.println(solve(t));
     }
 
-
-    static class SafeUtils {
-
-        public static int get(int[] array, int idx, int defVal) {
-            if (0 <= idx && idx < array.length) {
-                return array[idx];
-            } else {
-                return defVal;
+    private static int solve(int[] ts) {
+        int prevInteresting = 0;
+        for (int t : ts) {
+            if (t - prevInteresting > 15) {
+                return prevInteresting + 15;
             }
+            prevInteresting = t;
         }
-
-        public static int get(int[][] matrix, int r, int c, int defVal) {
-            if (0 <= r && r < matrix.length && 0 <= c && c < matrix[r].length) {
-                return matrix[r][c];
-            } else {
-                return defVal;
-            }
-        }
-
+        return Math.min(prevInteresting + 15, 90);
     }
-
 
 
     static class IOUtils {
@@ -96,16 +84,6 @@ public class Template {
             for (int i = 0 ; i < rows ; i++)
                 matrix[i] = readLongArray(cols);
             return matrix;
-        }
-
-        public static void print(int[] array, String sep) {
-            String s = "";
-            for (int item : array) {
-                System.out.print(s);
-                s = sep;
-                System.out.print(item);
-            }
-            System.out.println();
         }
     }
 

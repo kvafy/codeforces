@@ -4,13 +4,35 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.*;
 
-public class Template {
+public class Round251_B {
 
     public static void main(String[] args) throws IOException {
         int[] nm = IOUtils.readIntArray(2);
+        int n = nm[0];
+        int m = nm[1];
 
-        //TODO solution here
+        int solution;
+        if (m == 0) {
+            // no constraints
+            solution = n - 1;
+        } else {
+            int maxDiv2 = Integer.MIN_VALUE;
+            int minDiv1 = Integer.MAX_VALUE;
+            for (int i = 0 ; i < m ; i++) {
+                int u = IOUtils.readInt();
+                int v = IOUtils.readInt();
+                if (v < u) {
+                    maxDiv2 = Math.max(maxDiv2, v);
+                    minDiv1 = Math.min(minDiv1, u);
+                } else {
+                    maxDiv2 = Math.max(maxDiv2, u);
+                    minDiv1 = Math.min(minDiv1, v);
+                }
+            }
+            solution = Math.max(0, minDiv1 - maxDiv2);
+        }
 
+        System.out.println(solution);
     }
 
 
@@ -96,16 +118,6 @@ public class Template {
             for (int i = 0 ; i < rows ; i++)
                 matrix[i] = readLongArray(cols);
             return matrix;
-        }
-
-        public static void print(int[] array, String sep) {
-            String s = "";
-            for (int item : array) {
-                System.out.print(s);
-                s = sep;
-                System.out.print(item);
-            }
-            System.out.println();
         }
     }
 
