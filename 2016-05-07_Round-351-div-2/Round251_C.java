@@ -11,9 +11,6 @@ public class Round251_C {
 
         int[] result = new int[n];
 
-        int[] firstIdx = new int[n];
-        Arrays.fill(firstIdx, Integer.MAX_VALUE);
-
         for (int i = 0 ; i < t.length ; i++) {
 
             int dominant = -1;
@@ -22,13 +19,11 @@ public class Round251_C {
             for (int j = i ; j < t.length ; j++) {
                 int c = t[j] - 1;
 
-                firstIdx[c] = Math.min(firstIdx[c], j); // sufficient to initialize here ("c" seen here, "dominant" seen previously)
-
                 counts[c]++;
 
                 if (i == j
                         || counts[dominant] < counts[c]
-                        || counts[dominant] == counts[c] && firstIdx[c] < firstIdx[dominant]) {
+                        || counts[dominant] == counts[c] && c < dominant) {
                     dominant = c;
                 }
 
