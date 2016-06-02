@@ -6,12 +6,18 @@ import java.util.*;
 
 public class Template {
 
+    static final long MOD_10e9_PLUS_7 = 1_000_000_007L; // distributive over + - * (NOT /)
+
     public static void main(String[] args) throws IOException {
         FastReader.init(System.in);
 
         int n = FastReader.readInt();
 
+        int solution = 0;
+
         //TODO solution here
+
+        System.out.println(solution);
     }
 
     // inspired by https://www.cpe.ku.ac.th/~jim/java-io.html
@@ -53,10 +59,6 @@ public class Template {
                 matrix[i] = readIntArray(cols);
             }
             return matrix;
-        }
-
-        static long readLong() throws IOException {
-            return Long.parseLong(readString());
         }
 
         static double readDouble() throws IOException {
