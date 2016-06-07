@@ -1,68 +1,100 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
 
 public class Template {
 
     static final long MOD_10e9_PLUS_7 = 1_000_000_007L; // distributive over + - * (NOT /)
 
     public static void main(String[] args) throws IOException {
-        FastReader.init(System.in);
+        FastReader in = new FastReader(System.in);
+        PrintWriter out = new PrintWriter(System.out);
 
-        int n = FastReader.readInt();
+        int n = in.readInt();
 
         int solution = 0;
 
         //TODO solution here
 
-        System.out.println(solution);
+        out.println(solution);
+
+        out.flush();
     }
 
-    // inspired by https://www.cpe.ku.ac.th/~jim/java-io.html
+    /**
+     * Custom buffered reader. Faster than Scanner and
+     * BufferedReader + StringTokenizer.
+     */
     static class FastReader {
-        private static BufferedReader reader;
-        private static StringTokenizer tokenizer;
+        private final InputStream stream;
+        private int current;
+        private int size;
+        private byte[] buffer = new byte[1024 * 8];
 
-        static void init(InputStream input) {
-            reader = new BufferedReader(new InputStreamReader(input));
-            tokenizer = new StringTokenizer("");
+        public FastReader(InputStream stream) {
+            this.stream = stream;
+            current = 0;
+            size = 0;
         }
 
-        static String readString() throws IOException {
-            while (!tokenizer.hasMoreTokens()) {
-                String line = reader.readLine();
-                if (line == null) {
-                    throw new IllegalStateException("No more input");
+        public int readInt() {
+            int sign = 1;
+            int abs = 0;
+            int c = readNonEmpty();
+            if (c == '-') {
+                sign = -1;
+                c = readAny();
+            }
+            do {
+                if (c < '0' || c > '9') {
+                    throw new IllegalStateException();
                 }
-                tokenizer = new StringTokenizer(line);
-            }
-            return tokenizer.nextToken();
+                abs = 10 * abs + (c - '0');
+                c = readAny();
+            } while (!isEmpty(c));
+            return sign * abs;
         }
 
-        static int readInt() throws IOException {
-            return Integer.parseInt(readString());
+        public char readChar() {
+            return (char) readNonEmpty();
         }
 
-        static int[] readIntArray(int length) throws IOException {
-            int[] result = new int[length];
-            for (int i = 0 ; i < length ; i++) {
-                result[i] = readInt();
+        public String readString() {
+            StringBuffer sb = new StringBuffer();
+            int c;
+            do {
+                c = readAny();
+            } while (isEmpty(c));
+            do {
+                sb.append((char) c);
+                c = readAny();
+            } while (!isEmpty(c));
+            return sb.toString();
+        }
+
+        private int readAny() {
+            try {
+                if (current >= size) {
+                    current = 0;
+                    size = stream.read(buffer);
+                    if (size < 0) {
+                        return -1;
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to readAny next byte", e);
             }
+            return buffer[current++];
+        }
+
+        private int readNonEmpty() {
+            int result;
+            do {
+                result = readAny();
+            } while (isEmpty(result));
             return result;
         }
 
-        static int[][] readIntMatrix(int rows, int cols) throws IOException {
-            int[][] matrix = new int[rows][];
-            for (int i = 0 ; i < rows ; i++) {
-                matrix[i] = readIntArray(cols);
-            }
-            return matrix;
-        }
-
-        static double readDouble() throws IOException {
-            return Double.parseDouble(readString());
+        private static boolean isEmpty(int c) {
+            return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == -1;
         }
     }
 }
