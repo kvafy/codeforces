@@ -15,7 +15,6 @@ public class Template {
         //TODO solution here
 
         out.println(solution);
-
         out.flush();
     }
 
@@ -51,6 +50,14 @@ public class Template {
                 c = readAny();
             } while (!isEmpty(c));
             return sign * abs;
+        }
+
+        public int[] readIntArray(int n) {
+            int[] array = new int[n];
+            for (int i = 0 ; i < n ; i++) {
+                array[i] = readInt();
+            }
+            return array;
         }
 
         public char readChar() {
