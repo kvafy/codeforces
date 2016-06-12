@@ -7,7 +7,11 @@ public class Template {
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader(System.in);
         PrintWriter out = new PrintWriter(System.out);
+        solve(in, out);
+    }
 
+
+    public static void solve(FastReader in, PrintWriter out) {
         int n = in.readInt();
 
         int solution = 0;
@@ -18,9 +22,9 @@ public class Template {
         out.flush();
     }
 
+
     /**
-     * Custom buffered reader. Faster than Scanner and
-     * BufferedReader + StringTokenizer.
+     * Custom buffered reader. Faster than Scanner and BufferedReader + StringTokenizer.
      */
     static class FastReader {
         private final InputStream stream;
