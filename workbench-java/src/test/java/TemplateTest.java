@@ -10,10 +10,10 @@ public class TemplateTest {
     public void solve() throws Exception {
 
         String inputs[] = {
-            "3"
+                "3",
         };
         String expectedOuts[] = {
-            "0"
+                "0",
         };
 
 

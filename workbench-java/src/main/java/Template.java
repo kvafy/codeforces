@@ -2,7 +2,7 @@ import java.io.*;
 
 public class Template {
 
-    static final long MOD_10e9_PLUS_7 = 1_000_000_007L; // distributive over + - * (NOT /)
+    static final long MOD = 1_000_000_007L; // distributive over + - * (NOT /)
 
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader(System.in);
