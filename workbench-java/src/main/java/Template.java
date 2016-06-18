@@ -8,6 +8,7 @@ public class Template {
         FastReader in = new FastReader(System.in);
         PrintWriter out = new PrintWriter(System.out);
         solve(in, out);
+        out.flush();
     }
 
 
@@ -19,7 +20,6 @@ public class Template {
         //TODO solution here
 
         out.println(solution);
-        out.flush();
     }
 
 
