@@ -34,8 +34,18 @@ public class Round364_div2_D {
             // in "tb" time and so on.
 
             int T = (n + (k - 1)) / k; // how many times bus brings kids forward
+            
+            // l = T * tf * v2 - (T - 1) * tb * v2
+            // tb = ((v2 - v1) * tf) / (v2 + v1)
+            //    ~ (distance of walkers and dropped kids when bus stops)
+            //      divided by
+            //      (velocity at which walkers and the bus approach each other)
             double tf = (l / v2) / (T - (T - 1) * (v2 - v1) / (v2 + v1));
             double tb = (v2 - v1) / (v2 + v1) * tf;
+            
+            // bus starts at the start, makes T trips forward, each taking tf time
+            // and also makes (T - 1) trips backwards for rest of the walkers, each
+            // returning trip taking "tb"
             solution = T * tf + (T - 1) * tb;
         }
 
